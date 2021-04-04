@@ -1,0 +1,209 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Price Update | EyeMobiles - CRM</title>
+	{% include "headtags.html" %}
+</head>
+<body>
+	{% include "navbar.html" %}
+	{% include "sidebar.html" %}
+		
+	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#">
+					<em class="fa fa-home"></em>
+				</a></li>
+				<li class="active">Task Review</li>
+			</ol>
+		</div><!--/.row-->
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Task Review - {{task.id}}</h1>
+				<div>
+					<table id="task-details-table">
+				
+						<tr>
+							<th>
+								Given by:
+							</th>
+							<td> {{task.given_by}}</td>
+							<th>
+								Status:
+							</th>
+							<td> {{task.status}}</td>
+							<th>
+								Deadline:
+							</th>
+							<td> {{task.deadline}}</td>
+							<th>
+								Created on:
+							</th>
+							<td> {{task.date_created}}</td>
+							
+						</tr>
+					</table>
+				</div>
+			</div>
+			
+			<form mehtod="POST" action="{% url 'tasks:change-status' taskid=task.id %}"
+				id="change-status-form" class="change-status-form">
+				<input type="hidden" name="task_id" value="{{task.id}}" />
+				<div class="pull-left col-md-3">
+					{% if task.status == "approved" or task.status == "rejected" or task.status == "ready_to_upload" or task.status == "cancelled" %}
+					<div class="btn btn-success mg-10" disabled>
+						task status - {{task.status}}
+					</div>
+					{% else %}
+					<button id="task_ready_to_upload_btn" name="task_ready_to_upload_btn"
+						class="btn btn-success mg-10">
+						Mark as Ready to Upload
+					</button>
+					{% endif %}
+				</div>
+				{% if task.status == "approved" or task.status == "rejected" or task.status == "ready_to_upload" or task.status == "cancelled" %}
+				{% else %}
+				<div class="pull-left col-md-2">
+					<button id="task_cancelled_btn" name="task_cancelled_btn"
+						class="btn btn-danger mg-10">
+						Mark as Cancelled
+					</button>
+				</div>
+				{% endif %}
+			</form>
+		</div><!--/.row-->
+				
+		<div class="row">
+			
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Products - {{task.given_to}} - {{task.deadline}}</div>
+					<div class="panel-body">
+					<!-- <button type="submit" class="btn btn-primary">Approve All Products</button> -->
+
+					<div class="mg-10"> </div>
+					<div class="col-md-12">
+						{% if products|length > 0 %}
+						<div class="table-responsive">
+							<table class="table table-striped ">
+								<tr>
+									<th>ID</th>
+									<th class="col-md-4">Name</th>
+									<th> Regular Price</th>
+									<th style="background-color: #c5fcaf;"> New Regular Price</th>
+									<!-- <th> eYeMobiles Price</th> -->
+									<th> Sale Price</th>
+									<th style="background-color: #c5fcaf;"> Suggested Price</th>
+									<th> Sharaf DG</th>
+									<th> Carrefour</th>
+									<th> Jumbo</th>
+									<th> LuLu</th>
+									<th> Axiom</th>
+									<th> Approve/ reject Product</th>
+								</tr>
+								{% for product in products %}
+								<tr class="{{product.product_id}}">
+						
+									<td>
+										{% if product.permalink != None and product.permalink != "" %}
+										<a href="{{product.permalink}}">
+										{% endif %}
+										{{product.product_id}}
+										{% if product.permalink != None and product.permalink != "" %}</a>{% endif %}
+									</td>
+									<td class="col-md-4">{{product.name}}
+									</td>
+									<td>{{product.regular_price}}</td>
+									<td style="background-color: #c5fcaf;">
+										{{product.new_reg_price}}
+									</td>
+									<!-- <td>{{product.curr_price}}</td> -->
+									<td>{{product.sale_price}}</td>
+									<td style="background-color: #c5fcaf;">{{product.suggested_price}}</td>
+									<td>
+										{% if product.sharaf_dg_product_link != None and product.sharaf_dg_product_link != "" %}
+										<a href="{{product.sharaf_dg_product_link}}">
+										{% endif %}
+										{{product.sharaf_dg_price}}
+										{% if product.sharaf_dg_product_link != None and product.sharaf_dg_product_link != "" %}</a>{% endif %}
+									</td>
+									<td>
+										{% if product.carrefour_product_link != None and product.carrefour_product_link != "" %}
+										<a href="{{product.carrefour_product_link}}">
+										{% endif %}
+										{{product.carrefour_price}}
+										{% if product.carrefour_product_link != None and product.carrefour_product_link != "" %}</a>{% endif %}
+									</td>
+									<td>
+										{% if product.jumbo_product_link != None and product.jumbo_product_link != "" %}
+										<a href="{{product.jumbo_product_link}}">
+										{% endif %}
+										{{product.jumbo_price}}
+										{% if product.jumbo_product_link != None and product.jumbo_product_link != "" %}</a>{% endif %}
+									</td>
+									<td>
+										{% if product.lulu_product_link != None and product.lulu_product_link != "" %}
+										<a href="{{product.lulu_product_link}}">
+										{% endif %}
+										{{product.lulu_price}}
+										{% if product.lulu_product_link != None and product.lulu_product_link != "" %}</a>{% endif %}
+									</td>
+									<td>
+										{% if product.jumbo_product_link != None and product.jumbo_product_link != "" %}
+										<a href="{{product.jumbo_product_link}}">
+										{% endif %}
+										{{product.axiom_price}}
+										{% if product.jumbo_product_link != None and product.jumbo_product_link != "" %}</a>{% endif %}
+									</td>
+									<td>
+										{% if product.status == "not_reviewed" %}
+										<form method="POST" action="{% url 'tasks:review-task' taskid=product.task_id.id %}"
+											class="review-form">
+											{% csrf_token %}
+											<input type="hidden" name="product_id" value="{{product.product_id}}" />
+											<input type="hidden" name="task_id" value="{{product.task_id_id}}" />
+											
+											<button type="submit" name="approve_btn" class="btn btn-link" id="approve-btn">
+												<i class="fa fa-check" style="color: rgb(10, 240, 10);"></i>
+											</button>
+											<!-- <input type="submit" name="approve-btn" class="btn btn-link" id="approve-btn"
+												value="approve" /> -->
+								
+											
+											<button type="submit" name="reject_btn" class="btn btn-link" id="reject-btn">
+												<i class="fa fa-times" style="color: red;"></i>
+											</button>
+											<!-- <input type="submit" name="reject-btn" class="btn btn-link" id="reject-btn"
+												value="reject" /> -->
+										</form>
+										{% elif product.status == "uploaded" or product.status == "approved" %}
+										<i class="fa fa-check" style="color: rgb(10, 240, 10);"></i>
+										{% elif product.status == "rejected" %}
+										<i class="fa fa-times" style="color: red;"></i>
+										{% endif %}
+									</td>
+								</tr>
+								{% endfor %}
+							</table>
+						</div>
+						{% endif %}
+					</div>
+					
+				</div><!-- /.panel-->
+			</div><!-- /.col-->
+		</div>
+			<div class="col-sm-12">
+				<p class="back-link">CRM BY - Development Department</p>
+			</div>
+		</div><!-- /.row -->
+	</div><!--/.main-->
+	
+{% include "scripts-include.html" %}
+<script src="{% static 'js/task-review.js' %}"></script>
+
+</body>
+</html>

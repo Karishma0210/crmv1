@@ -1,0 +1,47 @@
+{% if tasks|length > 0 %}
+  
+
+<table class="table table-striped" id="task-table">
+    <tr>
+        <th> Task ID</th>
+        <th> Given to</th>
+        <th> Total Number of products</th>
+        <th> Task Date</th>
+        {% if tasks.0.status == "new" or tasks.0.status == "in_progress" or tasks.0.status == "ready_to_review" %}
+       
+        {% else %}
+        <th> Approved</th>
+        <th> Rejected</th>
+        {% endif %}
+        <th> Deadline</th>
+        {% if tasks.0.status == "ready_to_review" %}
+        <th> Review</th>
+        {% endif %}
+        
+    </tr>
+    {% for task in tasks %}
+    <tr>
+        <td><a href="{% url 'tasks:task' taskid=task.id %}">{{task.id}}</a></td>
+        <td>{{task.given_to}}</td>
+        <td>{{task.num_of_products}}</td>
+        <td>{{task.task_date}}</td>
+        {% if tasks.0.status == "new" or tasks.0.status == "in_progress" or tasks.0.status == "ready_to_review" %}
+        
+        {% else %}
+        <td>{{task.num_of_approved_products}}</td>
+        <td>{{task.num_of_rejected_products}}</td>
+        {% endif %}
+        <td>{{task.deadline}}</td>
+        {% if tasks.0.status == "ready_to_review" %}
+        <td><a href="{% url 'tasks:review-task' taskid=task.id %}"><i class="fa fa-eye"></i></a></td>
+        {% endif %}
+        
+
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<div class="alert alert-warning" role="alert">
+    No tasks here!
+</div>
+{% endif %}

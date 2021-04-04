@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% include "headtags.html" %}
+
+</head>
+
+<body>
+    {% include "navbar.html" %}
+    {% include "sidebar.html" %}
+
+    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="">
+                        <em class="fa fa-home"></em>
+                    </a></li>
+                <li class="active">View Task</li>
+            </ol>
+        </div>
+        <!--/.row-->
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-header">
+                    <h2> {{ task.given_to }} - {{ task.task_date }} </h2>
+                    <div>
+                        <table id="task-details-table">
+                            
+                            <tr>
+                                <th>
+                                    Given by:
+                                </th>
+                                <td> {{task.given_by}}</td>
+                                <th>
+                                    Status:
+                                </th>
+                                <td> {{task.status}}</td>
+                                <th>
+                                    Deadline:
+                                </th>
+                                <td> {{task.deadline}}</td>
+                                <th>
+                                    Created on:
+                                </th>
+                                <td> {{task.date_created}}</td>
+                                {% if user == task.given_by %}
+                                    {% if task.status == "new" %}
+                                    <td colspan=2>
+                                        <div class="pull-right">
+                                            <a href="{% url 'tasks:add-products' taskid=task.id %}" class="btn btn-success mg-10">
+                                                <i class="fa fa-plus"></i> Add more products </a>
+                                        </div>
+                                    </td>
+                                    {% elif task.status == "ready_to_review" %}
+                                    <td colspan=2>
+                                        <div class="pull-right">
+                                            <a href="{% url 'tasks:review-task' taskid=task.id %}" class="btn btn-primary mg-10">
+                                                <i class="fa fa-eye"></i> Review Task </a>
+                                        </div>
+                                    </td>
+                                    {% endif %}
+                                {% endif %}
+                                
+                                {% if user == task.given_to %}
+                                    {% if task.status == "new" or task.status == "in_progress" %}
+                                    <td colspan=2>
+                                        <div class="pull-right">
+                                            <a href="{% url 'tasks:workon-task' taskid=task.id %}" class="btn btn-success mg-10">
+                                                <i class="fa fa-pencil"></i> Modify prices </a>
+                                        </div>
+                                    </td>
+                                    {% endif %}
+                                {% endif %}
+                                {% if user in upload__group %}
+                                    {% if task.status == "ready_to_upload" %}
+                                    <td colspan=2>
+                                        <div class="pull-right">
+                                            <a href="{% url 'tasks:upload-task' taskid=task.id %}" class="btn btn-success mg-10">
+                                                <i class="fa fa-cloud-upload" aria-hidden="true"></i> Go to Upload Task </a>
+                                        </div>
+                                    </td>
+                                    {% elif task.status == "uploaded" %}
+                                    <td colspan=2>
+                                        <div class="pull-right">
+                                            <a href="#"
+                                                class="btn btn-success mg-10" disabled>
+                                                <i class="fa fa-cloud-upload"></i> Task uploaded </a>
+                                        </div>
+                                    </td>
+                                    {% endif %}
+                                {% endif %}
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <!--/.row-->
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Products</div>
+                    <div class="panel-body">
+                        
+
+                        <div class="mg-10"> </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                {% include "prod-view-del.html" %}
+                            </div>
+                        </div>
+                    </div><!-- /.panel-->
+                </div><!-- /.col-->
+            </div>
+            <div class="col-sm-12">
+                <p class="back-link">CRM BY - Development Department</p>
+            </div>
+        </div><!-- /.row -->
+    </div>
+    <!--/.main-->
+
+    {% include "scripts-include.html" %}
+    <script src="{% static 'js/task-view-del.js' %}"></script>
+
+</body>
+
+</html>

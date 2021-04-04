@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Price Update | EyeMobiles - CRM</title>
+    {% include "headtags.html" %}
+</head>
+
+<body>
+    {% include "navbar.html" %}
+    {% include "sidebar.html" %}
+
+    <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
+        <div class="row">
+            <ol class="breadcrumb">
+                <li><a href="#">
+                        <em class="fa fa-home"></em>
+                    </a></li>
+                <li class="active">Task</li>
+            </ol>
+        </div>
+        <!--/.row-->
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Task List</h1>
+            </div>
+            <div class="col-lg-12">
+                <div class="col-lg-4">
+                    <label for="pet-select">Select tasks:</label>
+                    
+                    <select name="task-status" id="task-status" class="form-group form-control">
+                        <option id="dummy" value="" selected>--Please choose an option--</option>
+                        {% for option_text, option_value in options %}
+                        <option value="{{option_value}}">{{ option_text }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                </div>
+                
+                <!-- only allow team leaders to add task -->
+                {% if user in tls %}
+                <div class="pull-right">
+                    <a href="{% url 'tasks:new-task' %}" class="btn btn-success mg-10">
+                        <i class="fa fa-plus"></i> Add new Task </a>
+                </div>
+                {% endif %}
+                
+            </div>
+        </div>
+        <!--/.row-->
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading" name="task-type" id="task-type">
+                        Selected type of task
+                    </div>
+
+                    <div class="panel-body" id="tt-space">
+                        <!-- SPACE FOR - including the task-table dynamically -->
+                        <div class="alert alert-info" role="alert">
+                            Select type of task!
+                        </div>
+                    </div>
+
+                </div><!-- /.panel-->
+            </div><!-- /.col-->
+        </div>
+        <div class="col-sm-12">
+            <p class="back-link">CRM BY - Development Department</p>
+        </div>
+    </div><!-- /.row -->
+    </div>
+    <!--/.main-->
+    {% include "scripts-include.html" %}
+    <script src="{% static 'js/task-list-tl.js' %}"></script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+# To activate this run
+#
+# pip3 install -r requirements.txt
+#
+# Django>=3.0.1
+# django-crispy-forms>=1.8.1
+# django-filter>=2.2.0
+# djangorestframework>=3.10.3
+# Markdown>=3.0.1
+# social-auth-app-django>=3.1.0
+# social-auth-core>=3.3.3
+# django-extensions>=2.2.5
+
+django>=3.1.6
+mysql>=0.0.2
+mysqlclient>=2.0.3
+woocommerce>=2.1.1
+
+
+#Specified users for testing purpose: 
+
+#Super Admin - admin@efutureye.com - Admin@786$ 
+#Team Leader – CS dept. - tl@efutureye.com - TeamLead@CS
+#Team Member 1 – CS dept. - tm1@efutureye.com - TM@CS123
+#Team Member 2 – CS dept. - tm2@efutureye.com - TM@CS123
+#Upload Department – up@efutureye.com - UP@PS132 
+#crmv1db - CrmV1@Pyaw

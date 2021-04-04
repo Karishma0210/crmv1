@@ -1,0 +1,19 @@
+.active {
+	background-color: rgb(167, 164, 164);
+}
+
+#task-details-table th {
+	/* background-color: rgb(6, 211, 91); */
+	height: 30px;
+	padding: 10px;
+}
+#task-details-table td {
+	/* background-color: rgb(97, 104, 204); */
+	height: 30px;
+	/* width: 200px; */
+	padding: 10px;
+}
+#task-details-table {
+	width: 100%;
+	padding: 10px;
+}

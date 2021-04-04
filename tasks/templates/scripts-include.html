@@ -1,0 +1,31 @@
+{% load static %}
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/chart.min.js' %}"></script>
+<script src="{% static 'js/chart-data.js' %}"></script>
+<script src="{% static 'js/easypiechart.js' %}"></script>
+<script src="{% static 'js/easypiechart-data.js' %}"></script>
+<script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            //console.log("adding listeners")
+            /* Toggle between adding and removing the "active" class,
+            to highlight the button that controls the panel */
+            this.classList.toggle("active");
+
+            /* Toggle between hiding and showing the active panel */
+            var accpanel = this.nextElementSibling;
+            if (accpanel.style.display === "block") {
+                accpanel.style.display = "none";
+            } else {
+                accpanel.style.display = "block";
+            }
+        });
+    }
+</script>

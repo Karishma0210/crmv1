@@ -1,0 +1,74 @@
+<div class="col-md-12">
+
+    {% for variableKey, variableValue in variableProducts.items %}
+
+    <div class="accordion">{{variableValue.name}}</div>
+    <div class="accpanel table-responsive">
+        <table class="table table-striped">
+            <tr>
+                <th><input type="checkbox" name="select_all" onclick="toggle(this, 'varCheckBox-{{forloop.counter0}}')"
+                        value="true"></th>
+                <th>ID</th>
+                <th class="col-md-3"> Name</th>
+                <th> Regular Price</th>
+                <!-- <th> eYeMobiles Price</th> -->
+                <th> Sale Price</th>
+                <th> Last Updated on eYeMobiles.com</th>
+            </tr>
+            {% for variationKey, variationValue in variationProducts.items %}
+            {% if variationValue.parent == variableKey %}
+            <tr>
+                <td>
+                    {% if variationKey in already_added_products %}
+                    <input name="checkBox" type="checkbox" id="cb_{{variationKey}}" value="{{ variationKey }}"
+                        class="checkbox varCheckBox-{{forloop.parentloop.counter0}} form-check-input" disabled readonly />
+                    {% else %}
+                    <input name="checkBox" type="checkbox" id="cb_{{variationKey}}" value="{{ variationKey }}"
+                        class="checkbox varCheckBox-{{forloop.parentloop.counter0}} form-check-input" />
+                    {% endif %}
+                </td>
+                <td>
+                    <label class="form-check-label">
+                        <a href="{% if variationValue.permalink != None %}{{variationValue.permalink}}{% endif %}"
+                            target="_blank">
+                        {{variationKey}}
+                        </a>
+                    </label>
+                </td>
+                <td>
+                    <input type="text" name="name_{{variationKey}}" class="form-control"
+                        value="{{variationValue.name}} {% for attr in variationValue.attributes %} {{attr.option}} {% endfor %}"
+                        readonly />
+                    <input type="hidden" name="parent_{{variationKey}}" 
+                        value="{{variationValue.parent}}" readonly />
+                    <input type="hidden" name="permalink_{{variationKey}}"
+                        value="{{variationValue.permalink}}" readonly />
+                </td>
+                <td>
+                    <input type="text" name="regular_price_{{variationKey}}" class="form-control"
+                        value="{{variationValue.regular_price}}"
+                        readonly />
+                </td>
+                <!-- <td>
+                    <input type="text" name="curr_price_{{variationKey}}" value="{{variationValue.curr_price}}"
+                        readonly />
+                </td> -->
+                <td>
+                    <input type="text" name="sale_price_{{variationKey}}" class="form-control"
+                        value="{{variationValue.sale_price}}"
+                        readonly />
+                </td>
+                <td>
+                    <input type="text" name="last_mod_onsite_{{variationKey}}" class="form-control"
+                        value="{{variationValue.date_modified}}"
+                        readonly />
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+
+    {% endfor %}
+
+</div>

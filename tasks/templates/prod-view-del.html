@@ -1,0 +1,61 @@
+
+{% if products|length > 0 %}
+<table class="table table-striped">
+    <tr>
+        <th>Product ID</th>
+        <th class="col-md-4"> Name</th>
+        <th> Regular Price</th>
+        {% if user == task.given_to %}
+        <th> New regular Price</th>
+        {% endif %}
+        <!-- <th> eYeMobiles/ Current Price</th> -->
+        <th> Sale Price</th>
+        {% if user == task.given_to %}
+        <th> Suggested Price</th>
+        {% endif %}
+        {% if user == task.given_by and task.status == "new" %}
+        <th> Delete Product</th>
+        {% endif %}
+
+    </tr>
+    {% for product in products %}
+    <tr>
+        <td>
+            {% if product.permalink != None and product.permalink != "null" %}
+            <a href="{{product.permalink}}" target="_blank">
+            {% endif %}
+            {{product.product_id}}
+            {% if product.permalink != None %}</a>{% endif %}
+        </td>
+        <td>{{product.name}}</td>
+        <td>{{product.regular_price}}</td>
+        {% if user == task.given_to %}
+        <td>{{product.new_reg_price}}</td>
+        {% endif %}
+        <!-- <td>{{product.curr_price}}</td> -->
+        <td>{{product.sale_price}}</td>
+        {% if user == task.given_to %}
+        <td>{{product.suggested_price}}</td>
+        {% endif %}
+        {% if user == task.given_by and task.status == "new" %}
+        <td>
+            <form method="POST" action="{% url 'tasks:delete-product' %}" class="delete-form">
+                {% csrf_token %}
+            
+                <input type="hidden" name="product_id" value="{{product.product_id}}" />
+                <input type="hidden" name="task_id" value="{{product.task_id_id}}" />
+                <button type="submit" class="btn btn-danger" id="{{product.product_id}}_btn" >
+                    <i class="fa fa-trash"></i>
+                </button>
+
+            </form>
+        </td>
+        {% endif %}
+        
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<div class="alert alert-warning" role="alert">No products in this category!</div>
+{% endif %}
+
