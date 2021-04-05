@@ -11,10 +11,10 @@
 # social-auth-core>=3.3.3
 # django-extensions>=2.2.5
 
-django>=3.1.6
-mysql>=0.0.2
-mysqlclient>=2.0.3
-woocommerce>=2.1.1
+Django>=3.0.1
+#mysql>=0.0.2
+#mysqlclient>=2.0.3
+woocommerce>=2.0.1
 
 
 #Specified users for testing purpose: 

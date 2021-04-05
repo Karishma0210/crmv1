@@ -11,9 +11,9 @@ from django.utils.decorators import method_decorator
 
 # Create your views here.
 
-filename = "super_secrets"
+filepath = "superman"
 fetched_data = ""
-with open(filename, 'rb') as inFile:
+with open(filepath, 'rb') as inFile:
     fetched_data = pickle.load(inFile)
     inFile.close()
 # print(fetched_data)
